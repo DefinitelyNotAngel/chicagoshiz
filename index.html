@@ -16,11 +16,35 @@
 
         <div class="section">
             <h2>Document Importer</h2>
-            <p>Select a document file (.txt or .docx) to import its content:</p>
-            <div class="file-input">
-                <label for="docFile" class="file-label">Select Document</label>
-                <input type="file" id="docFile" accept=".txt,.docx" style="display: none;">
+            <div class="import-options">
+                <div class="option-tabs">
+                    <button class="tab-btn active" data-tab="drag-drop-doc">Drag & Drop</button>
+                    <button class="tab-btn" data-tab="paste-text">Paste Text</button>
+                    <button class="tab-btn" data-tab="url-doc">From URL</button>
+                </div>
+                
+                <div class="tab-content active" id="drag-drop-doc">
+                    <div class="drop-area" id="docDropArea">
+                        <p>Drag & drop your document file here (.txt or .docx)</p>
+                        <p>or</p>
+                        <div class="file-input">
+                            <label for="docFile" class="file-label">Select Document</label>
+                            <input type="file" id="docFile" accept=".txt,.docx" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="paste-text">
+                    <textarea id="pasteTextArea" placeholder="Paste your text content here..."></textarea>
+                    <button id="loadPastedText" class="action-btn">Load Text</button>
+                </div>
+                
+                <div class="tab-content" id="url-doc">
+                    <input type="text" id="docUrl" placeholder="Enter document URL (.txt or .docx)">
+                    <button id="loadDocUrl" class="action-btn">Load Document</button>
+                </div>
             </div>
+            
             <div class="status" id="docStatus"></div>
             <h3>Document Content:</h3>
             <div id="textContent"></div>
@@ -28,40 +52,58 @@
 
         <div class="section">
             <h2>Music Player</h2>
-            <p>Select audio files from your local folder:</p>
-            <div class="file-input">
-                <label for="audioFile" class="file-label">Select Music Files</label>
-                <input type="file" id="audioFile" accept="audio/*" multiple>
-            </div>
+            <p>Playing music from hardcoded paths in the code</p>
 
             <div class="audio-player">
                 <div class="now-playing" id="nowPlaying">No song selected</div>
                 <audio id="audioPlayer" controls style="width: 100%;"></audio>
 
                 <div class="player-controls">
-                    <button id="prevButton" onclick="playPrevious()">Previous</button>
-                    <button id="nextButton" onclick="playNext()">Next</button>
+                    <button id="prevButton">Previous</button>
+                    <button id="nextButton">Next</button>
                 </div>
             </div>
 
             <h3>Playlist</h3>
             <div class="playlist-controls">
                 <div class="select-all-container">
-                    <input type="checkbox" id="selectAll" onchange="toggleSelectAll()">
+                    <input type="checkbox" id="selectAll">
                     <label for="selectAll">Select All</label>
                 </div>
-                <button id="deleteSelectedBtn" class="delete-btn" onclick="deleteSelected()" disabled>Delete Selected</button>
+                <button id="deleteSelectedBtn" class="delete-btn" disabled>Delete Selected</button>
             </div>
             <div class="playlist" id="playlist"></div>
             <div class="status" id="audioStatus"></div>
+            
+            <!-- Hidden section for manual audio addition (if needed) -->
+            <details>
+                <summary>Add More Songs Manually</summary>
+                <div class="import-options">
+                    <div class="option-tabs">
+                        <button class="tab-btn active" data-tab="drag-drop-audio">Drag & Drop</button>
+                        <button class="tab-btn" data-tab="url-audio">From URL</button>
+                    </div>
+                    
+                    <div class="tab-content active" id="drag-drop-audio">
+                        <div class="drop-area" id="audioDropArea">
+                            <p>Drag & drop your audio files here</p>
+                            <p>or</p>
+                            <div class="file-input">
+                                <label for="audioFile" class="file-label">Select Music Files</label>
+                                <input type="file" id="audioFile" accept="audio/*" multiple style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="tab-content" id="url-audio">
+                        <input type="text" id="audioUrl" placeholder="Enter audio URL">
+                        <input type="text" id="audioName" placeholder="Enter name for the audio file">
+                        <button id="loadAudioUrl" class="action-btn">Add to Playlist</button>
+                    </div>
+                </div>
+            </details>
         </div>
     </div>
-
-
-
-
-
-
 
     <script src="./js/script.js"></script>
 </body>
