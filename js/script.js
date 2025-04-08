@@ -1,339 +1,533 @@
-// Global variables for the playlist
+// Global variables
 let playlist = [];
-let currentTrackIndex = 0;
+let currentTrackIndex = -1;
 const audioPlayer = document.getElementById('audioPlayer');
+const nowPlaying = document.getElementById('nowPlaying');
 const playlistElement = document.getElementById('playlist');
-const nowPlayingElement = document.getElementById('nowPlaying');
+const audioStatus = document.getElementById('audioStatus');
+const docStatus = document.getElementById('docStatus');
 const textContent = document.getElementById('textContent');
-const statusElement = document.getElementById('docStatus');
+const selectAllCheckbox = document.getElementById('selectAll');
 const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
 
-// Auto-load document when selected
-document.getElementById('docFile').addEventListener('change', function(e) {
-    if (this.files.length === 0) {
-        statusElement.textContent = 'No file selected.';
-        return;
-    }
+// Declare mammoth variable
+const mammoth = window.mammoth;
+
+// Initialize the application
+document.addEventListener('DOMContentLoaded', () => {
+    // Set up tab navigation
+    setupTabs();
     
-    const file = this.files[0];
-    statusElement.innerHTML = '<span class="loading">Loading document...</span>';
+    // Set up document handling
+    setupDocumentHandling();
     
-    if (file.name.toLowerCase().endsWith('.txt')) {
-        // Handle text files
-        readTextFile(file);
-    } else if (file.name.toLowerCase().endsWith('.docx')) {
-        // Handle DOCX files
-        readDocxFile(file);
-    } else {
-        statusElement.textContent = 'Unsupported file format. Please select a .txt or .docx file.';
-    }
+    // Set up audio handling
+    setupAudioHandling();
+    
+    // Set up playlist controls
+    setupPlaylistControls();
+    
+    // Initialize playlist with hardcoded songs
+    initializePlaylist();
 });
 
-// Function to read text file
-function readTextFile(file) {
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        // For text files, we need to preserve line breaks
-        textContent.innerHTML = '';
-        const pre = document.createElement('pre');
-        pre.style.whiteSpace = 'pre-wrap';
-        pre.style.fontFamily = 'inherit';
-        pre.textContent = e.target.result;
-        textContent.appendChild(pre);
-        statusElement.textContent = 'Text file imported successfully!';
-    };
-    
-    reader.onerror = function() {
-        statusElement.textContent = 'Error reading file!';
-    };
-    
-    reader.readAsText(file);
-}
-
-// Function to read DOCX file
-function readDocxFile(file) {
-    const reader = new FileReader();
-    
-    reader.onload = function(e) {
-        // Use mammoth.js to convert DOCX to HTML
-        mammoth.convertToHtml({ arrayBuffer: e.target.result })
-            .then(function(result) {
-                textContent.innerHTML = result.value;
-                
-                // Log any warnings
-                if (result.messages.length > 0) {
-                    console.log("Warnings:", result.messages);
-                }
-                
-                statusElement.textContent = 'DOCX file imported successfully!';
-            })
-            .catch(function(error) {
-                console.error(error);
-                statusElement.textContent = 'Error parsing DOCX file: ' + error.message;
-            });
-    };
-    
-    reader.onerror = function() {
-        statusElement.textContent = 'Error reading file!';
-    };
-    
-    reader.readAsArrayBuffer(file);
-}
-
-// Auto-load audio files when selected
-document.getElementById('audioFile').addEventListener('change', function(e) {
-    const files = e.target.files;
-    const audioStatusElement = document.getElementById('audioStatus');
-    
-    if (files.length === 0) {
-        audioStatusElement.textContent = 'No files selected.';
-        return;
-    }
-    
-    // Clear previous playlist
+// Initialize playlist with hardcoded songs
+function initializePlaylist() {
+    // Clear any existing playlist
     playlist = [];
-    playlistElement.innerHTML = '';
     
-    // Add each file to the playlist
-    for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        
-        // Only add audio files
-        if (file.type.startsWith('audio/')) {
-            const audioURL = URL.createObjectURL(file);
-            playlist.push({
-                name: file.name,
-                url: audioURL
-            });
-            
-            // Create playlist item
-            addSongToPlaylistUI(playlist.length - 1);
-        }
-    }
+    // Add your hardcoded songs here
+    // You can use relative paths (if files are in your project) or absolute URLs
     
-    audioStatusElement.textContent = `Loaded ${playlist.length} audio files.`;
+    // Example with relative paths (files in your project)
+    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz');
+    addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
+    addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
+    addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
+    addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun');
+    addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
+    addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
+    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
+
     
-    // Play the first song if there are any
+    // Example with absolute paths (files on your computer)
+    // Note: These will only work if running the app locally
+    // addSongToPlaylist('file:///C:/Users/YourName/Music/song1.mp3', 'Song 1');
+    // addSongToPlaylist('file:///C:/Users/YourName/Music/song2.mp3', 'Song 2');
+    
+    // Example with URLs (files hosted online)
+    // addSongToPlaylist('https://example.com/music/song1.mp3', 'Online Song 1');
+    // addSongToPlaylist('https://example.com/music/song2.mp3', 'Online Song 2');
+    
+    // Render the playlist
+    renderPlaylist();
+    
+    // Start playing the first song if playlist is not empty
     if (playlist.length > 0) {
         currentTrackIndex = 0;
-        playSong(currentTrackIndex);
+        playTrack(0);
     }
-    
-    // Reset select all checkbox
-    document.getElementById('selectAll').checked = false;
-    updateDeleteSelectedButton();
-});
-
-// Function to add a song to the playlist UI
-function addSongToPlaylistUI(index) {
-    const playlistItem = document.createElement('div');
-    playlistItem.className = 'playlist-item';
-    playlistItem.dataset.index = index;
-    
-    // Create checkbox for selection
-    const checkbox = document.createElement('input');
-    checkbox.type = 'checkbox';
-    checkbox.className = 'song-checkbox';
-    checkbox.onchange = updateDeleteSelectedButton;
-    
-    // Create song title element
-    const songTitle = document.createElement('span');
-    songTitle.className = 'song-title';
-    songTitle.textContent = playlist[index].name;
-    songTitle.onclick = function() {
-        currentTrackIndex = parseInt(playlistItem.dataset.index);
-        playSong(currentTrackIndex);
-    };
-    
-    // Create delete button
-    const deleteBtn = document.createElement('button');
-    deleteBtn.className = 'delete-btn';
-    deleteBtn.textContent = 'Delete';
-    deleteBtn.onclick = function(e) {
-        e.stopPropagation();
-        deleteSong(parseInt(playlistItem.dataset.index));
-    };
-    
-    // Add elements to playlist item
-    playlistItem.appendChild(checkbox);
-    playlistItem.appendChild(songTitle);
-    playlistItem.appendChild(deleteBtn);
-    
-    playlistElement.appendChild(playlistItem);
 }
 
-// Function to play a song by index
-function playSong(index) {
-    if (index >= 0 && index < playlist.length) {
-        // Update the audio source
-        audioPlayer.src = playlist[index].url;
-        audioPlayer.play();
+// Helper function to add a song to the playlist
+function addSongToPlaylist(path, name) {
+    playlist.push({
+        name: name,
+        url: path,
+        source: 'path'
+    });
+}
+
+// Tab navigation setup
+function setupTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Get the parent tab container
+            const tabContainer = button.closest('.option-tabs').parentElement;
+            
+            // Remove active class from all buttons and content in this container
+            tabContainer.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            tabContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            // Add active class to clicked button
+            button.classList.add('active');
+            
+            // Show the corresponding content
+            const tabId = button.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+}
+
+// Document handling setup
+function setupDocumentHandling() {
+    // File input handling
+    const docFileInput = document.getElementById('docFile');
+    docFileInput.addEventListener('change', handleDocumentFile);
+    
+    // Drag and drop for documents
+    const docDropArea = document.getElementById('docDropArea');
+    setupDragAndDrop(docDropArea, handleDocumentFile);
+    
+    // Connect the file input to the drop area
+    docDropArea.addEventListener('click', () => docFileInput.click());
+    
+    // Paste text handling
+    const pasteTextArea = document.getElementById('pasteTextArea');
+    const loadPastedTextBtn = document.getElementById('loadPastedText');
+    
+    loadPastedTextBtn.addEventListener('click', () => {
+        const text = pasteTextArea.value.trim();
+        if (text) {
+            displayTextContent(text);
+            docStatus.textContent = 'Text loaded successfully!';
+            docStatus.style.color = 'green';
+        } else {
+            docStatus.textContent = 'Please paste some text first.';
+            docStatus.style.color = 'red';
+        }
+    });
+    
+    // URL document loading
+    const docUrlInput = document.getElementById('docUrl');
+    const loadDocUrlBtn = document.getElementById('loadDocUrl');
+    
+    loadDocUrlBtn.addEventListener('click', async () => {
+        const url = docUrlInput.value.trim();
+        if (!url) {
+            docStatus.textContent = 'Please enter a URL.';
+            docStatus.style.color = 'red';
+            return;
+        }
         
-        // Update now playing text
-        nowPlayingElement.textContent = `Now Playing: ${playlist[index].name}`;
+        try {
+            docStatus.textContent = 'Loading document...';
+            docStatus.style.color = 'blue';
+            
+            const response = await fetch(url);
+            if (!response.ok) throw new Error('Failed to fetch document');
+            
+            const contentType = response.headers.get('content-type');
+            
+            if (url.endsWith('.docx') || (contentType && contentType.includes('application/vnd.openxmlformats-officedocument.wordprocessingml.document'))) {
+                const blob = await response.blob();
+                const arrayBuffer = await blob.arrayBuffer();
+                processDocxFile(arrayBuffer);
+            } else {
+                const text = await response.text();
+                displayTextContent(text);
+                docStatus.textContent = 'Document loaded successfully!';
+                docStatus.style.color = 'green';
+            }
+        } catch (error) {
+            docStatus.textContent = `Error loading document: ${error.message}`;
+            docStatus.style.color = 'red';
+        }
+    });
+}
+
+// Audio handling setup
+function setupAudioHandling() {
+    // File input handling
+    const audioFileInput = document.getElementById('audioFile');
+    audioFileInput.addEventListener('change', handleAudioFiles);
+    
+    // Drag and drop for audio
+    const audioDropArea = document.getElementById('audioDropArea');
+    setupDragAndDrop(audioDropArea, handleAudioFiles);
+    
+    // Connect the file input to the drop area
+    audioDropArea.addEventListener('click', () => audioFileInput.click());
+    
+    // URL audio loading
+    const audioUrlInput = document.getElementById('audioUrl');
+    const audioNameInput = document.getElementById('audioName');
+    const loadAudioUrlBtn = document.getElementById('loadAudioUrl');
+    
+    loadAudioUrlBtn.addEventListener('click', () => {
+        const url = audioUrlInput.value.trim();
+        let name = audioNameInput.value.trim();
         
-        // Update active class in playlist
-        const playlistItems = document.querySelectorAll('.playlist-item');
-        playlistItems.forEach(item => {
-            item.classList.remove('active');
+        if (!url) {
+            audioStatus.textContent = 'Please enter a URL.';
+            audioStatus.style.color = 'red';
+            return;
+        }
+        
+        if (!name) {
+            // Extract filename from URL if no name provided
+            const urlParts = url.split('/');
+            name = urlParts[urlParts.length - 1].split('?')[0] || 'Unknown Track';
+        }
+        
+        addTrackToPlaylist({
+            name: name,
+            url: url,
+            source: 'url'
         });
         
-        // Find the item with the matching index
-        const activeItem = document.querySelector(`.playlist-item[data-index="${index}"]`);
-        if (activeItem) {
-            activeItem.classList.add('active');
-            // Scroll to the active item
-            activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        audioUrlInput.value = '';
+        audioNameInput.value = '';
+        audioStatus.textContent = 'Track added to playlist!';
+        audioStatus.style.color = 'green';
+    });
+    
+    // Audio player controls
+    document.getElementById('prevButton').addEventListener('click', playPrevious);
+    document.getElementById('nextButton').addEventListener('click', playNext);
+    
+    // Audio player events
+    audioPlayer.addEventListener('ended', () => {
+        playNext();
+    });
+}
+
+// Playlist controls setup
+function setupPlaylistControls() {
+    // Select all functionality
+    selectAllCheckbox.addEventListener('change', toggleSelectAll);
+    
+    // Delete selected functionality
+    deleteSelectedBtn.addEventListener('click', deleteSelected);
+    
+    // Update delete button state when checkboxes change
+    playlistElement.addEventListener('change', updateDeleteButtonState);
+}
+
+// Drag and drop setup
+function setupDragAndDrop(dropArea, handleCallback) {
+    ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, preventDefaults, false);
+    });
+    
+    function preventDefaults(e) {
+        e.preventDefault();
+        e.stopPropagation();
+    }
+    
+    ['dragenter', 'dragover'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => {
+            dropArea.classList.add('highlight');
+        }, false);
+    });
+    
+    ['dragleave', 'drop'].forEach(eventName => {
+        dropArea.addEventListener(eventName, () => {
+            dropArea.classList.remove('highlight');
+        }, false);
+    });
+    
+    dropArea.addEventListener('drop', (e) => {
+        const dt = e.dataTransfer;
+        const files = dt.files;
+        
+        if (files.length > 0) {
+            // Create a fake event object with files
+            const fakeEvent = { target: { files: files } };
+            handleCallback(fakeEvent);
         }
+    }, false);
+}
+
+// Document file handling
+function handleDocumentFile(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    
+    docStatus.textContent = 'Loading document...';
+    docStatus.style.color = 'blue';
+    
+    const fileName = file.name.toLowerCase();
+    const reader = new FileReader();
+    
+    if (fileName.endsWith('.txt')) {
+        reader.onload = function(e) {
+            displayTextContent(e.target.result);
+            docStatus.textContent = 'Document loaded successfully!';
+            docStatus.style.color = 'green';
+        };
+        reader.readAsText(file);
+    } else if (fileName.endsWith('.docx')) {
+        reader.onload = function(e) {
+            processDocxFile(e.target.result);
+        };
+        reader.readAsArrayBuffer(file);
+    } else {
+        docStatus.textContent = 'Unsupported file format. Please use .txt or .docx files.';
+        docStatus.style.color = 'red';
     }
 }
 
-// Play next song
-function playNext() {
-    if (playlist.length === 0) return;
-    
-    currentTrackIndex = (currentTrackIndex + 1) % playlist.length;
-    playSong(currentTrackIndex);
+// Process DOCX file using mammoth.js
+function processDocxFile(arrayBuffer) {
+    mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
+        .then(result => {
+            displayTextContent(result.value);
+            docStatus.textContent = 'Document loaded successfully!';
+            docStatus.style.color = 'green';
+            
+            if (result.messages.length > 0) {
+                console.warn('Warnings:', result.messages);
+            }
+        })
+        .catch(error => {
+            docStatus.textContent = `Error processing DOCX file: ${error.message}`;
+            docStatus.style.color = 'red';
+        });
 }
 
-// Play previous song
+// Display text content
+function displayTextContent(content) {
+    textContent.innerHTML = content;
+}
+
+// Audio files handling
+function handleAudioFiles(event) {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+    
+    audioStatus.textContent = 'Adding tracks to playlist...';
+    audioStatus.style.color = 'blue';
+    
+    let addedCount = 0;
+    
+    Array.from(files).forEach(file => {
+        if (file.type.startsWith('audio/')) {
+            const objectURL = URL.createObjectURL(file);
+            addTrackToPlaylist({
+                name: file.name,
+                url: objectURL,
+                source: 'file',
+                file: file
+            });
+            addedCount++;
+        }
+    });
+    
+    if (addedCount > 0) {
+        audioStatus.textContent = `Added ${addedCount} track(s) to playlist.`;
+        audioStatus.style.color = 'green';
+        
+        // If this is the first track and nothing is playing, start playing
+        if (playlist.length === addedCount && currentTrackIndex === -1) {
+            currentTrackIndex = 0;
+            playTrack(0);
+        }
+    } else {
+        audioStatus.textContent = 'No valid audio files were selected.';
+        audioStatus.style.color = 'red';
+    }
+    
+    // Reset the file input to allow selecting the same files again
+    if (event.target.id === 'audioFile') {
+        event.target.value = '';
+    }
+}
+
+// Add track to playlist
+function addTrackToPlaylist(track) {
+    playlist.push(track);
+    renderPlaylist();
+}
+
+// Render playlist
+function renderPlaylist() {
+    playlistElement.innerHTML = '';
+    
+    if (playlist.length === 0) {
+        playlistElement.innerHTML = '<div class="playlist-empty">Playlist is empty</div>';
+        return;
+    }
+    
+    playlist.forEach((track, index) => {
+        const item = document.createElement('div');
+        item.className = 'playlist-item';
+        if (index === currentTrackIndex) {
+            item.classList.add('active');
+        }
+        
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.className = 'track-checkbox';
+        checkbox.dataset.index = index;
+        
+        const nameSpan = document.createElement('span');
+        nameSpan.textContent = track.name;
+        nameSpan.style.marginLeft = '10px';
+        nameSpan.style.flexGrow = '1';
+        
+        item.appendChild(checkbox);
+        item.appendChild(nameSpan);
+        
+        // Add click event to play the track
+        nameSpan.addEventListener('click', () => {
+            currentTrackIndex = index;
+            playTrack(index);
+        });
+        
+        playlistElement.appendChild(item);
+    });
+    
+    updateDeleteButtonState();
+}
+
+// Play track
+function playTrack(index) {
+    if (index < 0 || index >= playlist.length) return;
+    
+    const track = playlist[index];
+    audioPlayer.src = track.url;
+    audioPlayer.play().catch(error => {
+        console.error('Error playing track:', error);
+        audioStatus.textContent = `Error playing track: ${error.message}`;
+        audioStatus.style.color = 'red';
+    });
+    
+    nowPlaying.textContent = `Now Playing: ${track.name}`;
+    
+    // Update active class in playlist
+    const items = playlistElement.querySelectorAll('.playlist-item');
+    items.forEach((item, i) => {
+        if (i === index) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
+}
+
+// Play previous track
 function playPrevious() {
     if (playlist.length === 0) return;
     
-    currentTrackIndex = (currentTrackIndex - 1 + playlist.length) % playlist.length;
-    playSong(currentTrackIndex);
+    currentTrackIndex--;
+    if (currentTrackIndex < 0) {
+        currentTrackIndex = playlist.length - 1;
+    }
+    
+    playTrack(currentTrackIndex);
 }
 
-// Delete a song from the playlist
-function deleteSong(index) {
-    // Check if the song to delete is currently playing
-    const isCurrentSong = index === currentTrackIndex;
+// Play next track
+function playNext() {
+    if (playlist.length === 0) return;
     
-    // Remove the song from the playlist array
-    playlist.splice(index, 1);
-    
-    // Rebuild the playlist UI to update indices
-    rebuildPlaylistUI();
-    
-    // Update the audio status
-    document.getElementById('audioStatus').textContent = `Playlist updated. ${playlist.length} songs remaining.`;
-    
-    // Handle the currently playing song
-    if (playlist.length === 0) {
-        // No songs left
-        audioPlayer.pause();
-        audioPlayer.src = '';
-        nowPlayingElement.textContent = 'No song selected';
+    currentTrackIndex++;
+    if (currentTrackIndex >= playlist.length) {
         currentTrackIndex = 0;
-    } else if (isCurrentSong) {
-        // If we deleted the current song, play the next one
-        // (which now has the same index since we removed the current one)
-        if (currentTrackIndex >= playlist.length) {
-            currentTrackIndex = 0;
-        }
-        playSong(currentTrackIndex);
-    } else if (index < currentTrackIndex) {
-        // If we deleted a song before the current one, adjust the current index
-        currentTrackIndex--;
     }
     
-    // Reset select all checkbox
-    document.getElementById('selectAll').checked = false;
-    updateDeleteSelectedButton();
+    playTrack(currentTrackIndex);
 }
 
-// Delete selected songs
-function deleteSelected() {
-    const checkboxes = document.querySelectorAll('.song-checkbox:checked');
-    if (checkboxes.length === 0) return;
-    
-    // Get indices of songs to delete (in descending order to avoid index shifting)
-    const indicesToDelete = Array.from(checkboxes)
-        .map(checkbox => parseInt(checkbox.closest('.playlist-item').dataset.index))
-        .sort((a, b) => b - a); // Sort in descending order
-    
-    // Track if current song will be deleted
-    const willDeleteCurrentSong = indicesToDelete.includes(currentTrackIndex);
-    
-    // Delete songs from playlist array
-    for (const index of indicesToDelete) {
-        playlist.splice(index, 1);
-        
-        // Adjust currentTrackIndex if needed
-        if (index < currentTrackIndex) {
-            currentTrackIndex--;
-        }
-    }
-    
-    // Rebuild the playlist UI
-    rebuildPlaylistUI();
-    
-    // Update the audio status
-    document.getElementById('audioStatus').textContent = `Deleted ${indicesToDelete.length} songs. ${playlist.length} songs remaining.`;
-    
-    // Handle playback if current song was deleted
-    if (playlist.length === 0) {
-        // No songs left
-        audioPlayer.pause();
-        audioPlayer.src = '';
-        nowPlayingElement.textContent = 'No song selected';
-        currentTrackIndex = 0;
-    } else if (willDeleteCurrentSong) {
-        // If we deleted the current song, play the first one
-        currentTrackIndex = 0;
-        playSong(currentTrackIndex);
-    } else if (currentTrackIndex >= playlist.length) {
-        // If current index is now out of bounds
-        currentTrackIndex = 0;
-        playSong(currentTrackIndex);
-    }
-    
-    // Reset select all checkbox
-    document.getElementById('selectAll').checked = false;
-    updateDeleteSelectedButton();
-}
-
-// Rebuild the playlist UI
-function rebuildPlaylistUI() {
-    playlistElement.innerHTML = '';
-    
-    for (let i = 0; i < playlist.length; i++) {
-        addSongToPlaylistUI(i);
-    }
-    
-    // Re-highlight the current song
-    if (playlist.length > 0 && currentTrackIndex < playlist.length) {
-        const activeItem = document.querySelector(`.playlist-item[data-index="${currentTrackIndex}"]`);
-        if (activeItem) {
-            activeItem.classList.add('active');
-        }
-    }
-}
-
-// Toggle select all checkbox
+// Toggle select all tracks
 function toggleSelectAll() {
-    const selectAll = document.getElementById('selectAll').checked;
-    const checkboxes = document.querySelectorAll('.song-checkbox');
-    
+    const checkboxes = document.querySelectorAll('.track-checkbox');
     checkboxes.forEach(checkbox => {
-        checkbox.checked = selectAll;
+        checkbox.checked = selectAllCheckbox.checked;
     });
     
-    updateDeleteSelectedButton();
+    updateDeleteButtonState();
 }
 
-// Update delete selected button state
-function updateDeleteSelectedButton() {
-    const checkboxes = document.querySelectorAll('.song-checkbox:checked');
-    deleteSelectedBtn.disabled = checkboxes.length === 0;
+// Delete selected tracks
+function deleteSelected() {
+    const checkboxes = document.querySelectorAll('.track-checkbox:checked');
+    if (checkboxes.length === 0) return;
     
-    if (checkboxes.length > 0) {
-        deleteSelectedBtn.textContent = `Delete Selected (${checkboxes.length})`;
-    } else {
-        deleteSelectedBtn.textContent = 'Delete Selected';
+    // Get indices to remove (in descending order to avoid index shifting issues)
+    const indicesToRemove = Array.from(checkboxes)
+        .map(checkbox => parseInt(checkbox.dataset.index))
+        .sort((a, b) => b - a);
+    
+    // Check if currently playing track will be removed
+    const willRemoveCurrentTrack = indicesToRemove.includes(currentTrackIndex);
+    
+    // Remove tracks from playlist
+    indicesToRemove.forEach(index => {
+        // Release object URL if it's a file source
+        if (playlist[index].source === 'file') {
+            URL.revokeObjectURL(playlist[index].url);
+        }
+        playlist.splice(index, 1);
+    });
+    
+    // Update current track index
+    if (willRemoveCurrentTrack) {
+        if (playlist.length > 0) {
+            currentTrackIndex = 0;
+            playTrack(0);
+        } else {
+            currentTrackIndex = -1;
+            audioPlayer.pause();
+            audioPlayer.src = '';
+            nowPlaying.textContent = 'No song selected';
+        }
+    } else if (currentTrackIndex !== -1) {
+        // Adjust currentTrackIndex if tracks before it were removed
+        let newIndex = currentTrackIndex;
+        indicesToRemove.forEach(index => {
+            if (index < currentTrackIndex) {
+                newIndex--;
+            }
+        });
+        currentTrackIndex = newIndex;
     }
+    
+    // Reset select all checkbox
+    selectAllCheckbox.checked = false;
+    
+    // Render updated playlist
+    renderPlaylist();
+    
+    audioStatus.textContent = `Removed ${indicesToRemove.length} track(s) from playlist.`;
+    audioStatus.style.color = 'green';
 }
 
-// Auto-play next song when current one ends
-audioPlayer.addEventListener('ended', playNext);
+// Update delete button state
+function updateDeleteButtonState() {
+    const hasCheckedItems = document.querySelectorAll('.track-checkbox:checked').length > 0;
+    deleteSelectedBtn.disabled = !hasCheckedItems;
+}
