@@ -1,0 +1,157 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.section {
+    border: 1px solid #ddd;
+    padding: 20px;
+    border-radius: 8px;
+}
+h1, h2 {
+    color: #333;
+}
+.file-input {
+    margin-bottom: 15px;
+}
+#textContent {
+    border: 1px solid #eee;
+    padding: 15px;
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+}
+/* Preserve formatting for document content */
+#textContent h1, #textContent h2, #textContent h3 {
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+}
+#textContent p {
+    margin-bottom: 1em;
+}
+#textContent ul, #textContent ol {
+    margin-left: 2em;
+    margin-bottom: 1em;
+}
+#textContent table {
+    border-collapse: collapse;
+    margin-bottom: 1em;
+}
+#textContent table, #textContent th, #textContent td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+.audio-controls {
+    margin-top: 15px;
+}
+.playlist {
+    margin-top: 15px;
+    max-height: 200px;
+    overflow-y: auto;
+    border: 1px solid #eee;
+    padding: 10px;
+}
+.playlist-item {
+    padding: 8px;
+    cursor: pointer;
+    border-bottom: 1px solid #eee;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.playlist-item:hover {
+    background-color: #f0f0f0;
+}
+.playlist-item.active {
+    background-color: #e0f7e0;
+    font-weight: bold;
+}
+.song-title {
+    flex-grow: 1;
+    margin-left: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.song-actions {
+    display: flex;
+    align-items: center;
+}
+button {
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+button:hover {
+    background-color: #45a049;
+}
+.delete-btn {
+    background-color: #f44336;
+    color: white;
+    padding: 4px 8px;
+    font-size: 12px;
+}
+.delete-btn:hover {
+    background-color: #d32f2f;
+}
+.status {
+    margin-top: 10px;
+    color: #666;
+}
+.player-controls {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+.playlist-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.now-playing {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.file-label {
+    display: inline-block;
+    padding: 8px 16px;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.file-label:hover {
+    background-color: #45a049;
+}
+#audioFile {
+    display: none;
+}
+.loading {
+    color: #666;
+    font-style: italic;
+}
+.checkbox-container {
+    display: flex;
+    align-items: center;
+}
+.select-all-container {
+    display: flex;
+    align-items: center;
+    margin-right: 10px;
+}
+.select-all-container label {
+    margin-left: 5px;
+    font-size: 14px;
+}
