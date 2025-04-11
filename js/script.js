@@ -42,7 +42,7 @@ function initializeDocument() {
     // loadDocumentFromPath('./documents/sample.txt', 'txt');
 
     // Example with a docx file (relative path)
-    loadDocumentFromPath('./text/CHICAGO.docx', 'docx');
+    // loadDocumentFromPath('./text/CHICAGO.docx', 'docx');
 
     // Example with absolute paths (files on your computer)
     // Note: These will only work if running the app locally
@@ -51,7 +51,7 @@ function initializeDocument() {
 
     // Example with URLs (files hosted online)
     // loadDocumentFromPath('https://example.com/documents/sample.txt', 'txt');
-    // loadDocumentFromPath('https://example.com/documents/sample.docx', 'docx');
+    loadDocumentFromPath('https://github.com/DefinitelyNotAngel/chicagoshiz/text/CHICAGO.docx', 'docx');
 
     // Example with hardcoded text content
     // loadHardcodedText('This is a sample text that is directly hardcoded in the JavaScript file. You can put any text content here.');
