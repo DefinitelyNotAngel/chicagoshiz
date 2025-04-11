@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document Reader with Music Player</title>
+    <title>Chicagoshiz</title>
     <!-- Add mammoth.js library for DOCX parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
     <link rel="stylesheet" href="./css/style.css">
@@ -12,46 +12,52 @@
 
 <body>
     <div class="container">
-        <h1>Document Reader with Music Player</h1>
+        <h1>Chicagoshiz!!!</h1>
 
         <div class="section">
-            <h2>Document Importer</h2>
-            <div class="import-options">
-                <div class="option-tabs">
-                    <button class="tab-btn active" data-tab="drag-drop-doc">Drag & Drop</button>
-                    <button class="tab-btn" data-tab="paste-text">Paste Text</button>
-                    <button class="tab-btn" data-tab="url-doc">From URL</button>
-                </div>
-                
-                <div class="tab-content active" id="drag-drop-doc">
-                    <div class="drop-area" id="docDropArea">
-                        <p>Drag & drop your document file here (.txt or .docx)</p>
-                        <p>or</p>
-                        <div class="file-input">
-                            <label for="docFile" class="file-label">Select Document</label>
-                            <input type="file" id="docFile" accept=".txt,.docx" style="display: none;">
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="tab-content" id="paste-text">
-                    <textarea id="pasteTextArea" placeholder="Paste your text content here..."></textarea>
-                    <button id="loadPastedText" class="action-btn">Load Text</button>
-                </div>
-                
-                <div class="tab-content" id="url-doc">
-                    <input type="text" id="docUrl" placeholder="Enter document URL (.txt or .docx)">
-                    <button id="loadDocUrl" class="action-btn">Load Document</button>
-                </div>
-            </div>
-            
+            <h2>textul</h2>
+            <p>Reading document from hardcoded path in the code</p>
+
             <div class="status" id="docStatus"></div>
             <h3>Document Content:</h3>
             <div id="textContent"></div>
+
+            <!-- Hidden section for manual document loading (if needed) -->
+            <details>
+                <summary>Load Different Document Manually</summary>
+                <div class="import-options">
+                    <div class="option-tabs">
+                        <button class="tab-btn active" data-tab="drag-drop-doc">Drag & Drop</button>
+                        <button class="tab-btn" data-tab="paste-text">Paste Text</button>
+                        <button class="tab-btn" data-tab="url-doc">From URL</button>
+                    </div>
+
+                    <div class="tab-content active" id="drag-drop-doc">
+                        <div class="drop-area" id="docDropArea">
+                            <p>Drag & drop your document file here (.txt or .docx)</p>
+                            <p>or</p>
+                            <div class="file-input">
+                                <label for="docFile" class="file-label">Select Document</label>
+                                <input type="file" id="docFile" accept=".txt,.docx" style="display: none;">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-content" id="paste-text">
+                        <textarea id="pasteTextArea" placeholder="Paste your text content here..."></textarea>
+                        <button id="loadPastedText" class="action-btn">Load Text</button>
+                    </div>
+
+                    <div class="tab-content" id="url-doc">
+                        <input type="text" id="docUrl" placeholder="Enter document URL (.txt or .docx)">
+                        <button id="loadDocUrl" class="action-btn">Load Document</button>
+                    </div>
+                </div>
+            </details>
         </div>
 
         <div class="section">
-            <h2>Music Player</h2>
+            <h2>Muzica</h2>
             <p>Playing music from hardcoded paths in the code</p>
 
             <div class="audio-player">
@@ -74,7 +80,7 @@
             </div>
             <div class="playlist" id="playlist"></div>
             <div class="status" id="audioStatus"></div>
-            
+
             <!-- Hidden section for manual audio addition (if needed) -->
             <details>
                 <summary>Add More Songs Manually</summary>
@@ -83,7 +89,7 @@
                         <button class="tab-btn active" data-tab="drag-drop-audio">Drag & Drop</button>
                         <button class="tab-btn" data-tab="url-audio">From URL</button>
                     </div>
-                    
+
                     <div class="tab-content active" id="drag-drop-audio">
                         <div class="drop-area" id="audioDropArea">
                             <p>Drag & drop your audio files here</p>
@@ -94,7 +100,7 @@
                             </div>
                         </div>
                     </div>
-                    
+
                     <div class="tab-content" id="url-audio">
                         <input type="text" id="audioUrl" placeholder="Enter audio URL">
                         <input type="text" id="audioName" placeholder="Enter name for the audio file">
