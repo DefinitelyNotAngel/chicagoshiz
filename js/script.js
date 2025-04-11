@@ -44,6 +44,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
     addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
     addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
+    addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love');
     addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun');
     addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
     addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone');
