@@ -82,6 +82,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
     addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
     addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
+//nowadays si i cant move on
     renderPlaylist();
     if (playlist.length > 0) {
         currentTrackIndex = 0;
