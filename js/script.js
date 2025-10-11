@@ -117,6 +117,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
     addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
     addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
+    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
     // Example with absolute paths (files on your computer)
     // Note: These will only work if running the app locally
     // addSongToPlaylist('file:///C:/Users/YourName/Music/song1.mp3', 'Song 1');
