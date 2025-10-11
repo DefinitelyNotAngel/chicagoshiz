@@ -10,30 +10,19 @@ const textContent = document.getElementById('textContent');
 const selectAllCheckbox = document.getElementById('selectAll');
 const deleteSelectedBtn = document.getElementById('deleteSelectedBtn');
 
-// Drag-and-drop reordering variables
-let dragSrcIndex = null; // Index of dragged item
+// Drag-and-drop reordering variable
+let dragSrcIndex = null;
 
 // Declare mammoth variable
 const mammoth = window.mammoth;
 
 // Initialize the application
 document.addEventListener('DOMContentLoaded', () => {
-    // Set up tab navigation
     setupTabs();
-
-    // Set up document handling
     setupDocumentHandling();
-
-    // Set up audio handling
     setupAudioHandling();
-
-    // Set up playlist controls
     setupPlaylistControls();
-
-    // Initialize playlist with hardcoded songs
     initializePlaylist();
-
-    // Initialize document with hardcoded path
     initializeDocument();
 });
 
@@ -42,7 +31,6 @@ function initializeDocument() {
     loadDocumentFromPath('./text/CHICAGO.docx', 'CHICAGO');
 }
 
-// Helper function to load document from a path
 async function loadDocumentFromPath(path, type) {
     docStatus.textContent = 'Loading document...';
     docStatus.style.color = 'blue';
@@ -74,28 +62,26 @@ async function loadDocumentFromPath(path, type) {
     }
 }
 
-// Helper function to load hardcoded text
 function loadHardcodedText(text) {
     displayTextContent(text);
     docStatus.textContent = 'Document loaded successfully!';
     docStatus.style.color = 'green';
 }
 
-// Initialize playlist with hardcoded songs
 function initializePlaylist() {
     playlist = [];
-    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie'); .setAttribute('draggable', 'true')
-    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz');
+    addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
+    addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
+    addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
+    addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love');
+    addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun');
+    addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
+    addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone');
+    addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
+    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
+    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
+    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
     renderPlaylist();
     if (playlist.length > 0) {
         currentTrackIndex = 0;
@@ -111,7 +97,6 @@ function addSongToPlaylist(path, name) {
     });
 }
 
-// Tab navigation setup
 function setupTabs() {
     const tabButtons = document.querySelectorAll('.tab-btn');
     tabButtons.forEach(button => {
@@ -126,7 +111,6 @@ function setupTabs() {
     });
 }
 
-// Document handling setup
 function setupDocumentHandling() {
     const docFileInput = document.getElementById('docFile');
     docFileInput.addEventListener('change', handleDocumentFile);
@@ -178,7 +162,6 @@ function setupDocumentHandling() {
     });
 }
 
-// Audio handling setup
 function setupAudioHandling() {
     const audioFileInput = document.getElementById('audioFile');
     audioFileInput.addEventListener('change', handleAudioFiles);
@@ -217,14 +200,12 @@ function setupAudioHandling() {
     });
 }
 
-// Playlist controls setup
 function setupPlaylistControls() {
     selectAllCheckbox.addEventListener('change', toggleSelectAll);
     deleteSelectedBtn.addEventListener('click', deleteSelected);
     playlistElement.addEventListener('change', updateDeleteButtonState);
 }
 
-// Drag and drop setup for document/audio uploads
 function setupDragAndDrop(dropArea, handleCallback) {
     ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
         dropArea.addEventListener(eventName, preventDefaults, false);
@@ -253,7 +234,6 @@ function setupDragAndDrop(dropArea, handleCallback) {
     }, false);
 }
 
-// Document file handling
 function handleDocumentFile(event) {
     const file = event.target.files[0];
     if (!file) return;
@@ -279,7 +259,6 @@ function handleDocumentFile(event) {
     }
 }
 
-// Process DOCX file using mammoth.js
 function processDocxFile(arrayBuffer) {
     mammoth.convertToHtml({ arrayBuffer: arrayBuffer })
         .then(result => {
@@ -296,12 +275,10 @@ function processDocxFile(arrayBuffer) {
         });
 }
 
-// Display text content
 function displayTextContent(content) {
     textContent.innerHTML = content;
 }
 
-// Audio files handling
 function handleAudioFiles(event) {
     const files = event.target.files;
     if (!files || files.length === 0) return;
@@ -336,13 +313,12 @@ function handleAudioFiles(event) {
     }
 }
 
-// Add track to playlist
 function addTrackToPlaylist(track) {
     playlist.push(track);
     renderPlaylist();
 }
 
-// Render playlist with drag-and-drop reordering
+// DRAG AND DROP PLAYLIST REORDERING
 function renderPlaylist() {
     playlistElement.innerHTML = '';
     if (playlist.length === 0) {
@@ -355,32 +331,35 @@ function renderPlaylist() {
         if (index === currentTrackIndex) {
             item.classList.add('active');
         }
-        // Drag-and-drop reordering
+        // Make draggable for reordering
         item.setAttribute('draggable', 'true');
         item.dataset.index = index;
-        item.addEventListener('dragstart', (e) => {
+
+        // Drag events
+        item.addEventListener('dragstart', function(e) {
             dragSrcIndex = index;
             item.classList.add('dragging');
             e.dataTransfer.effectAllowed = 'move';
         });
-        item.addEventListener('dragend', () => {
+        item.addEventListener('dragend', function(e) {
             dragSrcIndex = null;
             item.classList.remove('dragging');
         });
-        item.addEventListener('dragover', (e) => {
+        item.addEventListener('dragover', function(e) {
             e.preventDefault();
             item.classList.add('drag-over');
         });
-        item.addEventListener('dragleave', () => {
+        item.addEventListener('dragleave', function(e) {
             item.classList.remove('drag-over');
         });
-        item.addEventListener('drop', (e) => {
+        item.addEventListener('drop', function(e) {
             e.preventDefault();
             item.classList.remove('drag-over');
             if (dragSrcIndex !== null && dragSrcIndex !== index) {
                 movePlaylistItem(dragSrcIndex, index);
             }
         });
+
         const checkbox = document.createElement('input');
         checkbox.type = 'checkbox';
         checkbox.className = 'track-checkbox';
@@ -391,7 +370,6 @@ function renderPlaylist() {
         nameSpan.style.flexGrow = '1';
         item.appendChild(checkbox);
         item.appendChild(nameSpan);
-        // Add click event to play the track
         nameSpan.addEventListener('click', () => {
             currentTrackIndex = index;
             playTrack(index);
@@ -401,12 +379,18 @@ function renderPlaylist() {
     updateDeleteButtonState();
 }
 
-// Move playlist item from oldIndex to newIndex and re-render
+// Reorder logic
 function movePlaylistItem(oldIndex, newIndex) {
-    if (oldIndex < 0 || oldIndex >= playlist.length || newIndex < 0 || newIndex >= playlist.length) return;
+    if (
+        oldIndex < 0 ||
+        oldIndex >= playlist.length ||
+        newIndex < 0 ||
+        newIndex >= playlist.length
+    ) {
+        return;
+    }
     const [movedItem] = playlist.splice(oldIndex, 1);
     playlist.splice(newIndex, 0, movedItem);
-    // Update currentTrackIndex if needed
     if (currentTrackIndex === oldIndex) {
         currentTrackIndex = newIndex;
     } else if (currentTrackIndex > oldIndex && currentTrackIndex <= newIndex) {
@@ -417,7 +401,6 @@ function movePlaylistItem(oldIndex, newIndex) {
     renderPlaylist();
 }
 
-// Play track
 function playTrack(index) {
     if (index < 0 || index >= playlist.length) return;
     const track = playlist[index];
@@ -438,7 +421,6 @@ function playTrack(index) {
     });
 }
 
-// Play previous track
 function playPrevious() {
     if (playlist.length === 0) return;
     currentTrackIndex--;
@@ -448,7 +430,6 @@ function playPrevious() {
     playTrack(currentTrackIndex);
 }
 
-// Play next track
 function playNext() {
     if (playlist.length === 0) return;
     currentTrackIndex++;
@@ -458,7 +439,6 @@ function playNext() {
     playTrack(currentTrackIndex);
 }
 
-// Toggle select all tracks
 function toggleSelectAll() {
     const checkboxes = document.querySelectorAll('.track-checkbox');
     checkboxes.forEach(checkbox => {
@@ -467,7 +447,6 @@ function toggleSelectAll() {
     updateDeleteButtonState();
 }
 
-// Delete selected tracks
 function deleteSelected() {
     const checkboxes = document.querySelectorAll('.track-checkbox:checked');
     if (checkboxes.length === 0) return;
@@ -506,7 +485,6 @@ function deleteSelected() {
     audioStatus.style.color = 'green';
 }
 
-// Update delete button state
 function updateDeleteButtonState() {
     const hasCheckedItems = document.querySelectorAll('.track-checkbox:checked').length > 0;
     deleteSelectedBtn.disabled = !hasCheckedItems;
