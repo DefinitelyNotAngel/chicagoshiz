@@ -84,18 +84,18 @@ function loadHardcodedText(text) {
 // Initialize playlist with hardcoded songs
 function initializePlaylist() {
     playlist = [];
-    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz');
-    addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
-    addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
-    addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
-    addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love');
-    addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun');
-    addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
-    addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone');
-    addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
-    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
-    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
-    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
+    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie'); .setAttribute('draggable', 'true')
+    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag'); .setAttribute('draggable', 'true')
     renderPlaylist();
     if (playlist.length > 0) {
         currentTrackIndex = 0;
