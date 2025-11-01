@@ -115,7 +115,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
     addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone');
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
-    addSongToPlaylist('./muzica/14 razzle dazzle.mp3', 'razzle dazzle');
+    addSongToPlaylist('./muzica/14 Razzle Dazzle [music].mp3', 'razzle dazzle');
     addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
     addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
     addSongToPlaylist('./muzica/Vocali.se_5573_Nowadays-Roxie_music.mp3', 'nowadays');
