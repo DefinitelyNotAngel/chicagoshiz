@@ -488,6 +488,7 @@ function playTrack(index) {
     if (index < 0 || index >= playlist.length) return;
 
     const track = playlist[index];
+    audioPlayer.type = "audio/mpeg";
     audioPlayer.src = track.url;
     audioPlayer.play().catch(error => {
         console.error('Error playing track:', error);
