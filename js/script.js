@@ -106,20 +106,31 @@ function initializePlaylist() {
     // You can use relative paths (if files are in your project) or absolute URLs
 
     // Example with relative paths (files in your project)
+    addSongToPlaylist('./muzica cu mc/', '01-scena 1 inainte overture');
     addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz');
+    addSongToPlaylist('./muzica cu mc/3 funny honey.mp3', 'funny honey cu mc');
     addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
+    addSongToPlaylist('./muzica cu mc/4 cell block tango.mp3', 'cell block tango cu mc');
     addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
+    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
     addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
+    addSongToPlaylist('./muzica cu mc/5 when you\'re good to mama.mp3', 'when you\'re good to mama cu mc');
     addSongToPlaylist('./muzica/7 all i care about is love.mp3', 'all i care about is love');
+    addSongToPlaylist('./muzica cu mc/7 all i care about is love.mp3', 'all i care about is love cu mc');
     addSongToPlaylist('./muzica/10 they both reached for the gun.mp3', 'they both reached for the gun');
+    addSongToPlaylist('./muzica cu mc/10 they both reached for the gun.mp3', 'they both reached for the gun cu mc');
     addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
     addSongToPlaylist('./muzica/12 I cant do it alone.mp3', 'I cant do it alone');
+    addSongToPlaylist('./muzica cu mc/12 I cant do it alone.mp3', 'I cant do it alone cu mc');
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
-    addSongToPlaylist('./muzica/Razzle Dazzle inst.mp3', 'razzle dazzle');
-    addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
-    addSongToPlaylist('./muzica/nowadays - hot honey rag.mp3', 'nowadays/hot honey rag');
-    addSongToPlaylist('./muzica/Vocali.se_5573_Nowadays-Roxie_music.mp3', 'nowadays');
-    addSongToPlaylist('./muzica/Vocali.se_6757_I-Move-On_music.mp3', 'I move on');
+    addSongToPlaylist('./muzica/14 Razzle Dazzle inst.mp3', 'razzle dazzle');
+    addSongToPlaylist('./muzica cu mc/all i care about pentru billy.mp3', 'all i care about pentru billy');
+    addSongToPlaylist('./muzica cu mc/15 nowadays.mp3', 'nowadays cu mc');
+    addSongToPlaylist('./muzica/15 nowadays.mp3', 'nowadays');
+    addSongToPlaylist('./muzica cu mc/16 nowadays - hot honey rag.mp3', 'nowadays - hot honey rag cu mc');
+    addSongToPlaylist('./muzica/16 nowadays - hot honey rag.mp3', 'nowadays - hot honey rag');
+
+
     // Example with absolute paths (files on your computer)
     // Note: These will only work if running the app locally
     // addSongToPlaylist('file:///C:/Users/YourName/Music/song1.mp3', 'Song 1');
