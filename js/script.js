@@ -110,7 +110,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'overture/all that jazz');
     addSongToPlaylist('./muzica cu mc/3 funny honey.mp3', 'funny honey cu mc');
     addSongToPlaylist('./muzica/3 funny honey.mp3', 'funny honey');
-    addSongToPlaylist('./muzica cu mc/4 cell block tango.mp3', 'cell block tango cu mc');
+    addSongToPlaylist('./muzica cu mc/4 cell block tango mai lunga pauza.mp3', 'cell block tango cu mc');
     addSongToPlaylist('./muzica/4 cell block tango.mp3', 'cell block tango');
     addSongToPlaylist('./muzica/4 cell block tango mai lunga pauza.mp3', 'cell block tango mai lung yippie');
     addSongToPlaylist('./muzica/5 when you\'re good to mama.mp3', 'when you\'re good to mama');
