@@ -113,7 +113,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica cu mc/5 when you\'re good to mama.mp3', 'when you\'re good to mama cu mc');
     addSongToPlaylist('./muzica cu mc/7 all i care about is love.mp3', 'all i care about is love cu mc');
     addSongToPlaylist('./muzica cu mc/10 they both reached for the gun.mp3', 'they both reached for the gun cu mc');
-    addSongToPlaylist('./muzica/I move on.mp3', 'I move on');
+    addSongToPlaylist('./muzica/10.5 i move on.mp3', 'I move on');
     addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
     addSongToPlaylist('./muzica cu mc/12 I cant do it alone.mp3', 'I cant do it alone cu mc');
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
