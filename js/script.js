@@ -107,6 +107,7 @@ function initializePlaylist() {
 
     // Example with relative paths (files in your project)
     addSongToPlaylist('./muzica cu mc/dragi spectatori chicago.mp3', 'dragi spectatori');
+    addSongToPlaylist('./muzica cu mc/dupa dragi spectatori.mp3', ' trupa art and act');
     addSongToPlaylist('./muzica cu mc/01-scena 1 inainte overture.mp3', 'mc inainte overture');
     addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', ' overture si all that jazz');
     addSongToPlaylist('./muzica cu mc/3 funny honey.mp3', 'funny honey cu mc');
