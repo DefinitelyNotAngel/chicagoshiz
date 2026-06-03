@@ -129,6 +129,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica cu mc/final mc.mp3', 'mcul final');
     addSongToPlaylist('./muzica cu mc/Anastacia - Love Is A Crime.mp3', 'love is a crime');
 
+    // asta e pus doar ca sa se faca iar siteul
 
     // Example with absolute paths (files on your computer)
     // Note: These will only work if running the app locally
