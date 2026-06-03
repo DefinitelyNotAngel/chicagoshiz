@@ -121,6 +121,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/Roxie\'s Suite.mp3', 'melodie pauza');
     addSongToPlaylist('./muzica/Roxie\'s Suite.mp3', 'melodie pauza');
     addSongToPlaylist('./muzica/Roxie\'s Suite.mp3', 'melodie pauza');
+    addSongToPlaylist('./muzica cu mc/podcast dupa pauza.mp3', 'podcast');
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
     addSongToPlaylist('./muzica cu mc/all i care about pentru billy.mp3', 'all i care about pentru billy');
     addSongToPlaylist('./muzica cu mc/15 nowadays.mp3', 'nowadays cu mc');
