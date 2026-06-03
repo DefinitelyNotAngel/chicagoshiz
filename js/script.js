@@ -107,7 +107,6 @@ function initializePlaylist() {
 
     // Example with relative paths (files in your project)
     addSongToPlaylist('./muzica cu mc/dragi spectatori chicago.mp3', 'dragi spectatori');
-    addSongToPlaylist('./muzica cu mc/dupa dragi spectatori.mp3', ' trupa art and act');
     addSongToPlaylist('./muzica cu mc/01-scena 1 inainte overture.mp3', 'mc inainte overture');
     addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', ' overture si all that jazz');
     addSongToPlaylist('./muzica cu mc/3 funny honey.mp3', 'funny honey cu mc');
@@ -119,10 +118,10 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica/11 roxie.mp3', 'roxie');
     addSongToPlaylist('./muzica cu mc/12 I cant do it alone.mp3', 'I cant do it alone cu mc');
     addSongToPlaylist('./muzica/13 mr cellophane.mp3', 'mr cellophane');
-    addSongToPlaylist('./muzica cu mc/Neck Snap sound effect.mp3', 'gat rupt gen');
     addSongToPlaylist('./muzica cu mc/all i care about pentru billy.mp3', 'all i care about pentru billy');
     addSongToPlaylist('./muzica cu mc/15 nowadays.mp3', 'nowadays cu mc');
-    addSongToPlaylist('./muzica cu mc/16 nowadays - hot honey rag.mp3', 'nowadays - hot honey rag cu mc');
+    addSongToPlaylist('./muzica cu mc/ final mc.mp3', 'mcul final');
+    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'all that jazz');
     addSongToPlaylist('./muzica cu mc/Anastacia - Love Is A Crime.mp3', 'love is a crime');
 
 
