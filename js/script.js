@@ -126,7 +126,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica cu mc/15 nowadays.mp3', 'nowadays cu mc');
     addSongToPlaylist('./muzica cu mc/mc hot honey singur.mp3', 'mc hot honey');
     addSongToPlaylist('./muzica cu mc/ final mc.mp3', 'mcul final');
-    addSongToPlaylist('./muzica/1 + 2 overture.all that jazz.mp3', 'all that jazz');
+    addSongToPlaylist('./muzica/all that jazz.mp3', 'all that jazz');
     addSongToPlaylist('./muzica cu mc/Anastacia - Love Is A Crime.mp3', 'love is a crime');
 
 
