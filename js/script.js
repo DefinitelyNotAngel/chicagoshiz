@@ -127,7 +127,7 @@ function initializePlaylist() {
     addSongToPlaylist('./muzica cu mc/15 nowadays.mp3', 'nowadays cu mc');
     addSongToPlaylist('./muzica cu mc/mc hot honey singur.mp3', 'mc hot honey');
     addSongToPlaylist('./muzica/all that jazz.mp3', 'all that jazz');
-    addSongToPlaylist('./muzica cu mc/final mc.mp3', 'mcul final');
+    addSongToPlaylist('./muzica cu mc/mc final.mp3', 'mcul final');
     addSongToPlaylist('./muzica cu mc/Anastacia - Love Is A Crime.mp3', 'love is a crime');
 
     // asta e pus doar ca sa se faca iar siteul
